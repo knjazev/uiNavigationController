@@ -17,8 +17,54 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        
+       
+        
+        window  = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        window?.windowScene = windowScene
+        window?.rootViewController = createTabBarController()
+//        let startController = StartViewController()
+//        let navigationtController = UINavigationController(rootViewController: startController)
+//        window?.rootViewController = navigationtController
+        window?.makeKeyAndVisible()
+        
+        
+  
     }
+    
+    func createRedNavigationController() -> UINavigationController {
+               
+               let redViewController = RedViewController()
+               redViewController.title = "Red"
+               redViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
+        
+    
+               
+               return UINavigationController(rootViewController: redViewController)
+               
+               
+           }
+           
+        func createBlueNavigationController() -> UINavigationController {
+                  
+                  let blueViewController = BlueViewController()
+                  blueViewController.title = "Blue"
+           blueViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .history, tag: 1)
+                  
+                  return UINavigationController(rootViewController: blueViewController)
+      
+              }
+           
+           func createTabBarController() -> UITabBarController {
+               
+               let tabBar = UITabBarController()
+               UITabBar.appearance().tintColor = .systemBlue
+               tabBar.viewControllers = [createRedNavigationController(), createBlueNavigationController()]
+               return tabBar
+               
+           }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
